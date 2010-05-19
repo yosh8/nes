@@ -56,16 +56,18 @@ sub initOwner {
 sub merge {
     my $i = shift;
     my $j = shift;
-    for(my $indexOfDay=0;$indexOfDay <= $#{$sches[$j]}; $indexOfDay++) {
-        if($sches[$i][0] < $sches[$j][$indexOfDay]) {
-            return 0;
-        } elsif($sches[$i][0] > $sches[$j][$indexOfDay]) {
-            next;
-        } elsif($sches[$i][0] == $sches[$j][$indexOfDay]) {
-            # i郎の持っている地図をj郎に渡す
-            $countOfMap[$j] += $countOfMap[$i];
-            $countOfMap[$i] = 0;
-            return (1, $sches[$j][$indexOfDay]);
+    for(my $indexOfDay_i=0;$indexOfDay_i <= $#{$sches[$i]}; $indexOfDay_i++) {
+        for(my $indexOfDay=0;$indexOfDay <= $#{$sches[$j]}; $indexOfDay++) {
+            if($sches[$i][$indexOfDay_i] < $sches[$j][$indexOfDay]) {
+                last;
+            } elsif($sches[$i][$indexOfDay_i] > $sches[$j][$indexOfDay]) {
+                next;
+            } elsif($sches[$i][$indexOfDay_i] == $sches[$j][$indexOfDay]) {
+                # i郎の持っている地図をj郎に渡す
+                $countOfMap[$j] += $countOfMap[$i];
+                $countOfMap[$i] = 0;
+                return (1, $sches[$j][$indexOfDay]);
+            }
         }
     }
     return 0;
