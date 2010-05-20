@@ -1,4 +1,6 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
+use strict;
+use warnings;
 my $DEBUG = 0;
 
 &main();
