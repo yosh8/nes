@@ -17,10 +17,8 @@ sub main {
         my @days = split(/ /, $line);
         push(@sches, \@days);
     }
-    warn Dumper \@sches;
 #    warn Dumper $#{$sches[0]}+1;
     @countOfMap = &initOwner($#sches + 1);
-    warn Dumper \@countOfMap;
     # 各人のスケジュールについて他の人のスケジュールに同じ日があるか見ていく
     # 前提としてはi郎の方が空いてる日が少ない。ので他の人に渡したい。
     for(my $i=0; $i <= $#sches; $i++) {
@@ -29,13 +27,11 @@ sub main {
         }
         for(my $j=$i+1; $j <= $#sches; $j++) {
             my ($ret, $day) = &merge($i, $j);
-            print("i=$i, j=$j\n"); warn Dumper \@countOfMap;
             # 地図を渡したら次の人に。
             if(1 == $ret) {
-                print("schedule matched\n");
                 # j郎の地図の数が人数と同じなら全部集まった！
                 if($countOfMap[$j] == ($#sches+1)) {
-                    print("integrated at $day th!\n");
+                    print("$day \n");
                     return;
                 }
                 last;
